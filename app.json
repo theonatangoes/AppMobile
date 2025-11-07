@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "netflix-mobile",
-    "slug": "netflix-mobile",
+    "name": "clima-mobile",
+    "slug": "clima-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "netflixmobile",
+    "scheme": "climamobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

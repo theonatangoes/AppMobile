@@ -70,65 +70,66 @@ const popularCities = [
   "Paris",
 ];
 
-// === NOVAS IMAGENS DE FUNDO ===
+// === NOVAS IMAGENS DE FUNDO ATUALIZADAS ===
 const backgroundImages = {
-  // CEU ABERTO - SOL (01d) e POUCAS NUVENS (02d)
+  // 🌅 CEU LIMPO - SOL (01d) - Céu azul com nuvens
   "01d":
-    "https://images.unsplash.com/photo-1590073242678-70ee3c2f8293?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens
+    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens brancas
+
+  // POUCAS NUVENS (02d) - Céu com algumas nuvens
   "02d":
-    "https://images.unsplash.com/photo-1590073242678-70ee3c2f8293?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens
+    "https://img.freepik.com/fotos-gratis/bela-paisagem-celeste-durante-o-dia_23-2149265586.jpg?semt=ais_hybrid&w=740&q=80", // Céu azul com nuvens esparsas
 
-  // NOITE (01n, 02n)
+  // 🌌 NOITE ESTRELADA (01n, 02n) - Céu noturno com estrelas
   "01n":
-    "https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2072&auto=format&fit=crop", // Céu estrelado
+    "https://img.freepik.com/fotos-gratis/imagem-vertical-de-um-belo-ceu-estrelado_181624-42267.jpg?semt=ais_hybrid&w=740&q=80", // Céu estrelado intenso
   "02n":
-    "https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2072&auto=format&fit=crop", // Céu estrelado
+    "https://images.unsplash.com/photo-1595178302776-fa04e6d45879?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGMlQzMlQTl1JTIwZXN0cmVsYWRvfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000", // Céu noturno com estrelas
 
-  // NUBLADO (03d, 04d)
+  // 🌫️ NUBLADO (03d, 04d) - Céu cinza com nuvens
   "03d":
-    "https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2070&auto=format&fit=crop", // Dia nublado/encoberto
+    "https://img.freepik.com/fotos-premium/fundo-do-ceu-nublado-nuvens-dramaticas_483040-130.jpg", // Céu cinza totalmente encoberto
   "04d":
-    "https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2070&auto=format&fit=crop", // Dia nublado/encoberto
+    "https://img.freepik.com/fotos-gratis/nuvens-de-tempestade_1122-2845.jpg", // Céu cinza totalmente encoberto
 
-  // NUBLADO NOITE (03n, 04n)
+  // NUBLADO NOITE (03n, 04n) - Noite com nuvens
   "03n":
-    "https://images.unsplash.com/photo-1532178235361-a3b04c1c49c2?q=80&w=1974&auto=format&fit=crop", // Noite nublada
+    "https://images.unsplash.com/photo-1500740516770-92bd004b996e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8", // Céu noturno nublado
   "04n":
-    "https://images.unsplash.com/photo-1532178235361-a3b04c1c49c2?q=80&w=1974&auto=format&fit=crop", // Noite nublada
+    "https://images.unsplash.com/photo-1595736516846-c9fe0cb86f7c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YyVDMyVBOXUlMjBub3R1cm5vJTIwbnVibGFkb3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000", // Céu noturno nublado
 
-  // CHUVA (09d, 09n, 10d, 10n)
+  // 🌧️ CHUVA (09d, 09n, 10d, 10n) - Céu com gotas de água
   "09d":
-    "https://images.unsplash.com/photo-1515694346937-94d85e41e622?q=80&w=1974&auto=format&fit=crop", // Chuva (vidro molhado)
+    "https://media.istockphoto.com/id/2183276741/pt/foto/dark-overcast-sky-with-heavy-rain-and-lightning-intense-weather-phenomenon.jpg?s=612x612&w=0&k=20&c=tFGmcMSTCig3yTyQI3UDjTH_FUGVc4OQ-6UlbPmjhL0=", // Chuva com gotas visíveis
   "09n":
-    "https://images.unsplash.com/photo-1515694346937-94d85e41e622?q=80&w=1974&auto=format&fit=crop", // Chuva (vidro molhado)
+    "https://static.vecteezy.com/ti/fotos-gratis/p2/8900318-chuva-a-noite-fundo-escuro-tiro-de-chuva-caindo-gratis-foto.JPG", // Chuva noturna
   "10d":
-    "https://images.unsplash.com/photo-1515694346937-94d85e41e622?q=80&w=1974&auto=format&fit=crop", // Chuva (vidro molhado)
+    "https://img.freepik.com/fotos-premium/a-chuva-cai-na-janela-com-nuvens-e-fundo-do-ceu-apos-a-chuva_719722-909.jpg", // Chuva com gotas no céu
   "10n":
-    "https://images.unsplash.com/photo-1515694346937-94d85e41e622?q=80&w=1974&auto=format&fit=crop", // Chuva (vidro molhado)
+    "https://img.freepik.com/fotos-premium/foto-impressionante-fundo-preto-com-chuva-forte-caindo-gotas-de-chuva-batendo-no-chao-chuvoso-ceu-noturno-um_900706-61077.jpg?semt=ais_hybrid&w=740&q=80", // Chuva noturna
 
-  // TROVÕES (11d, 11n)
-  "11d":
-    "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?q=80&w=2071&auto=format&fit=crop", // Tempestade / Raio
+  // ⛈️ TROVÕES (11d, 11n) - Céu com raios e gotas de água
+  "11d": "https://pixnio.com/free-images/2017/08/15/2017-08-15-09-58-11.jpg", // Raio no céu com chuva
   "11n":
-    "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?q=80&w=2071&auto=format&fit=crop", // Tempestade / Raio
+    "https://pixnio.com/free-images/2017/08/31/2017-08-31-06-26-19-1000x662.jpg", // Múltiplos raios com chuva
 
-  // NEVE (13d, 13n)
+  // ❄️ NEVE (13d, 13n) - Montanhas de neve
   "13d":
-    "https://images.unsplash.com/photo-1547754980-3df97fed72a8?q=80&w=1974&auto=format&fit=crop", // Neve dia
+    "https://img.freepik.com/fotos-gratis/bela-foto-de-montanhas-e-arvores-cobertas-de-neve-e-neblina_181624-17590.jpg?semt=ais_hybrid&w=740&q=80", // Montanhas nevadas
   "13n":
-    "https://images.unsplash.com/photo-1547754980-3df97fed72a8?q=80&w=1974&auto=format&fit=crop", // Neve
+    "https://img.freepik.com/fotos-gratis/vista-do-ceu-noturno-estrelado-com-natureza-e-paisagem-montanhosa_23-2151614765.jpg?semt=ais_hybrid&w=740&q=80", // Montanhas nevadas noturnas
 
-  // NEBLINA (50d, 50n)
+  // 🌫️ NEBLINA (50d, 50n) - Céu cinza com nuvens
   "50d":
-    "https://images.unsplash.com/photo-1543968313-28b43f003433?q=80&w=1974&auto=format&fit=crop", // Neblina
+    "https://uploads.metroimg.com/wp-content/uploads/2017/02/28093850/Neblina.jpg", // Neblina e céu cinza
   "50n":
-    "https://images.unsplash.com/photo-1543968313-28b43f003433?q=80&w=1974&auto=format&fit=crop", // Neblina
+    "https://s2-g1.glbimg.com/QCRy0SnilibLE2tWlhqaK5CetJc=/0x0:1600x1200/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/p/P/rpZhDfT9iHhytlmSazRg/nevoa-belem-christian-emanoel.jpeg", // Neblina noturna
 
   // PADRÃO
   default_day:
-    "https://images.unsplash.com/photo-1590073242678-70ee3c2f8293?q=80&w=1974&auto=format&fit=crop", // Padrão Dia
+    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens
   default_night:
-    "https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2072&auto=format&fit=crop", // Padrão Noite
+    "https://www.shutterstock.com/image-photo/movement-stars-night-sky-view-600nw-2626239147.jpg", // Céu estrelado
 };
 
 // Mapeamento de ícones
@@ -536,7 +537,7 @@ export default function App() {
     <ImageBackground
       source={{ uri: currentBackground }}
       style={styles.background}
-      imageStyle={{ opacity: 0.8 }} // Você pode ajustar a opacidade aqui
+      imageStyle={{ opacity: 0.9 }}
     >
       <SafeAreaView style={styles.container}>
         <StatusBar
@@ -649,17 +650,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // === ESTILO DA BARRA DE PESQUISA MODIFICADO ===
+  // === ESTILO DA BARRA DE PESQUISA ===
   searchBarContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 15,
     paddingVertical: 12,
     backgroundColor: "rgba(0, 0, 0, 0.3)",
-    // margin: 15, // <--- Linha antiga
-    marginHorizontal: 15, // Mantém o espaçamento lateral
-    marginTop: 50, // <--- AUMENTA O ESPAÇAMENTO SUPERIOR
-    marginBottom: 15, // Mantém o espaçamento inferior
+    marginHorizontal: 15,
+    marginTop: 50,
+    marginBottom: 15,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.3)",
