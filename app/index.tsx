@@ -47,6 +47,10 @@ interface WeatherData {
   visibility: number;
   timezone: number;
   dt: number;
+  coord: {
+    lat: number;
+    lon: number;
+  };
 }
 
 // Cidades para a tela de busca
@@ -61,6 +65,7 @@ const recommendedCities = [
   "Goiânia",
   "Belo Horizonte",
 ];
+
 const popularCities = [
   "Beijing",
   "Shanghai",
@@ -70,66 +75,47 @@ const popularCities = [
   "Paris",
 ];
 
-// === NOVAS IMAGENS DE FUNDO ATUALIZADAS ===
+// Imagens de fundo (mantidas as mesmas)
 const backgroundImages = {
-  // 🌅 CEU LIMPO - SOL (01d) - Céu azul com nuvens
   "01d":
-    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens brancas
-
-  // POUCAS NUVENS (02d) - Céu com algumas nuvens
+    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop",
   "02d":
-    "https://img.freepik.com/fotos-gratis/bela-paisagem-celeste-durante-o-dia_23-2149265586.jpg?semt=ais_hybrid&w=740&q=80", // Céu azul com nuvens esparsas
-
-  // 🌌 NOITE ESTRELADA (01n, 02n) - Céu noturno com estrelas
+    "https://img.freepik.com/fotos-gratis/bela-paisagem-celeste-durante-o-dia_23-2149265586.jpg?semt=ais_hybrid&w=740&q=80",
   "01n":
-    "https://img.freepik.com/fotos-gratis/imagem-vertical-de-um-belo-ceu-estrelado_181624-42267.jpg?semt=ais_hybrid&w=740&q=80", // Céu estrelado intenso
+    "https://img.freepik.com/fotos-gratis/imagem-vertical-de-um-belo-ceu-estrelado_181624-42267.jpg?semt=ais_hybrid&w=740&q=80",
   "02n":
-    "https://images.unsplash.com/photo-1595178302776-fa04e6d45879?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGMlQzMlQTl1JTIwZXN0cmVsYWRvfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000", // Céu noturno com estrelas
-
-  // 🌫️ NUBLADO (03d, 04d) - Céu cinza com nuvens
+    "https://images.unsplash.com/photo-1595178302776-fa04e6d45879?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGMlQzMlQTl1JTIwZXN0cmVsYWRvfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
   "03d":
-    "https://img.freepik.com/fotos-premium/fundo-do-ceu-nublado-nuvens-dramaticas_483040-130.jpg", // Céu cinza totalmente encoberto
+    "https://img.freepik.com/fotos-premium/natureza-do-sol-no-ceu-nublado-com-nuvens_73110-10563.jpg",
   "04d":
-    "https://img.freepik.com/fotos-gratis/nuvens-de-tempestade_1122-2845.jpg", // Céu cinza totalmente encoberto
-
-  // NUBLADO NOITE (03n, 04n) - Noite com nuvens
+    "https://img.freepik.com/fotos-gratis/nuvens-de-tempestade_1122-2845.jpg",
   "03n":
-    "https://images.unsplash.com/photo-1500740516770-92bd004b996e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8", // Céu noturno nublado
+    "https://images.unsplash.com/photo-1500740516770-92bd004b996e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExfHx8ZW58MHx8fHx8",
   "04n":
-    "https://images.unsplash.com/photo-1595736516846-c9fe0cb86f7c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YyVDMyVBOXUlMjBub3R1cm5vJTIwbnVibGFkb3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000", // Céu noturno nublado
-
-  // 🌧️ CHUVA (09d, 09n, 10d, 10n) - Céu com gotas de água
+    "https://images.unsplash.com/photo-1595736516846-c9fe0cb86f7c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YyVDMyVBOXUlMjBub3R1cm5vJTIwbnVibGFkb3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
   "09d":
-    "https://media.istockphoto.com/id/2183276741/pt/foto/dark-overcast-sky-with-heavy-rain-and-lightning-intense-weather-phenomenon.jpg?s=612x612&w=0&k=20&c=tFGmcMSTCig3yTyQI3UDjTH_FUGVc4OQ-6UlbPmjhL0=", // Chuva com gotas visíveis
+    "https://media.istockphoto.com/id/2183276741/pt/foto/dark-overcast-sky-with-heavy-rain-and-lightning-intense-weather-phenomenon.jpg?s=612x612&w=0&k=20&c=tFGmcMSTCig3yTyQI3UDjTH_FUGVc4OQ-6UlbPmjhL0=",
   "09n":
-    "https://static.vecteezy.com/ti/fotos-gratis/p2/8900318-chuva-a-noite-fundo-escuro-tiro-de-chuva-caindo-gratis-foto.JPG", // Chuva noturna
+    "https://static.vecteezy.com/ti/fotos-gratis/p2/8900318-chuva-a-noite-fundo-escuro-tiro-de-chuva-caindo-gratis-foto.JPG",
   "10d":
-    "https://img.freepik.com/fotos-premium/a-chuva-cai-na-janela-com-nuvens-e-fundo-do-ceu-apos-a-chuva_719722-909.jpg", // Chuva com gotas no céu
+    "https://img.freepik.com/fotos-premium/a-chuva-cai-na-janela-com-nuvens-e-fundo-do-ceu-apos-a-chuva_719722-909.jpg",
   "10n":
-    "https://img.freepik.com/fotos-premium/foto-impressionante-fundo-preto-com-chuva-forte-caindo-gotas-de-chuva-batendo-no-chao-chuvoso-ceu-noturno-um_900706-61077.jpg?semt=ais_hybrid&w=740&q=80", // Chuva noturna
-
-  // ⛈️ TROVÕES (11d, 11n) - Céu com raios e gotas de água
-  "11d": "https://pixnio.com/free-images/2017/08/15/2017-08-15-09-58-11.jpg", // Raio no céu com chuva
+    "https://img.freepik.com/fotos-premium/foto-impressionante-fundo-preto-com-chuva-forte-caindo-gotas-de-chuva-batendo-no-chao-chuvoso-ceu-noturno-um_900706-61077.jpg?semt=ais_hybrid&w=740&q=80",
+  "11d": "https://pixnio.com/free-images/2017/08/15/2017-08-15-09-58-11.jpg",
   "11n":
-    "https://pixnio.com/free-images/2017/08/31/2017-08-31-06-26-19-1000x662.jpg", // Múltiplos raios com chuva
-
-  // ❄️ NEVE (13d, 13n) - Montanhas de neve
+    "https://pixnio.com/free-images/2017/08/31/2017-08-31-06-26-19-1000x662.jpg",
   "13d":
-    "https://img.freepik.com/fotos-gratis/bela-foto-de-montanhas-e-arvores-cobertas-de-neve-e-neblina_181624-17590.jpg?semt=ais_hybrid&w=740&q=80", // Montanhas nevadas
+    "https://img.freepik.com/fotos-gratis/bela-foto-de-montanhas-e-arvores-cobertas-de-neve-e-neblina_181624-17590.jpg?semt=ais_hybrid&w=740&q=80",
   "13n":
-    "https://img.freepik.com/fotos-gratis/vista-do-ceu-noturno-estrelado-com-natureza-e-paisagem-montanhosa_23-2151614765.jpg?semt=ais_hybrid&w=740&q=80", // Montanhas nevadas noturnas
-
-  // 🌫️ NEBLINA (50d, 50n) - Céu cinza com nuvens
+    "https://img.freepik.com/fotos-gratis/vista-do-ceu-noturno-estrelado-com-natureza-e-paisagem-montanhosa_23-2151614765.jpg?semt=ais_hybrid&w=740&q=80",
   "50d":
-    "https://uploads.metroimg.com/wp-content/uploads/2017/02/28093850/Neblina.jpg", // Neblina e céu cinza
+    "https://uploads.metroimg.com/wp-content/uploads/2017/02/28093850/Neblina.jpg",
   "50n":
-    "https://s2-g1.glbimg.com/QCRy0SnilibLE2tWlhqaK5CetJc=/0x0:1600x1200/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/p/P/rpZhDfT9iHhytlmSazRg/nevoa-belem-christian-emanoel.jpeg", // Neblina noturna
-
-  // PADRÃO
+    "https://s2-g1.glbimg.com/QCRy0SnilibLE2tWlhqaK5CetJc=/0x0:1600x1200/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/p/P/rpZhDfT9iHhytlmSazRg/nevoa-belem-christian-emanoel.jpeg",
   default_day:
-    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop", // Céu azul com nuvens
+    "https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop",
   default_night:
-    "https://www.shutterstock.com/image-photo/movement-stars-night-sky-view-600nw-2626239147.jpg", // Céu estrelado
+    "https://www.shutterstock.com/image-photo/movement-stars-night-sky-view-600nw-2626239147.jpg",
 };
 
 // Mapeamento de ícones
@@ -180,43 +166,33 @@ export default function App() {
   const updateBackgroundAndTime = () => {
     if (!weatherData) return;
 
-    // CALCULA HORA LOCAL DA CIDADE CORRETAMENTE
-    const now = new Date();
-    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-    const cityTime = new Date(utc + weatherData.timezone * 1000);
+    try {
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const cityTime = new Date(utc + weatherData.timezone * 1000);
 
-    const hours = cityTime.getHours();
-    const minutes = cityTime.getMinutes();
-    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}`;
+      const hours = cityTime.getHours();
+      const minutes = cityTime.getMinutes();
+      const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}`;
 
-    setCityLocalTime(formattedTime);
+      setCityLocalTime(formattedTime);
 
-    // DETERMINA SE É DIA OU NOITE (6h às 18h = dia)
-    const isDayTime = hours >= 6 && hours < 18;
+      const isDayTime = hours >= 6 && hours < 18;
+      const weatherIcon = weatherData.weather[0].icon;
 
-    // USA O ÍCONE DA API PARA DETERMINAR O CLIMA EXATO
-    const weatherIcon = weatherData.weather[0].icon;
+      const backgroundUrl =
+        backgroundImages[weatherIcon as keyof typeof backgroundImages] ||
+        (isDayTime
+          ? backgroundImages.default_day
+          : backgroundImages.default_night);
 
-    console.log("🔍 DETALHES DA CIDADE:");
-    console.log("Cidade:", weatherData.name);
-    console.log("Fuso horário:", weatherData.timezone);
-    console.log("Hora UTC:", now.toUTCString());
-    console.log("Hora local cidade:", formattedTime);
-    console.log("É dia?", isDayTime);
-    console.log("Ícone da API:", weatherIcon);
-    console.log("Condição:", weatherData.weather[0].main);
-    console.log("Descrição:", weatherData.weather[0].description);
-
-    // SELECIONA O FUNDO BASEADO NO ÍCONE EXATO DA API
-    const backgroundUrl =
-      backgroundImages[weatherIcon as keyof typeof backgroundImages] ||
-      (isDayTime
-        ? backgroundImages.default_day
-        : backgroundImages.default_night);
-
-    setCurrentBackground(backgroundUrl);
+      setCurrentBackground(backgroundUrl);
+    } catch (error) {
+      console.error("Erro ao calcular hora local:", error);
+      setCityLocalTime("--:--");
+    }
   };
 
   const initializeApp = async () => {
@@ -277,11 +253,6 @@ export default function App() {
       );
 
       if (response.data) {
-        console.log("🎯 DADOS DA CIDADE BUSCADA:");
-        console.log("Nome:", response.data.name);
-        console.log("País:", response.data.sys.country);
-        console.log("Fuso horário:", response.data.timezone);
-        console.log("Ícone:", response.data.weather[0].icon);
         setWeatherData(response.data);
       }
     } catch (error: any) {
@@ -326,23 +297,18 @@ export default function App() {
     });
   };
 
-  // Função para obter informações do ícone
   const getWeatherIconInfo = () => {
     if (!weatherData) return weatherConditions["01d"];
     const weatherIcon = weatherData.weather[0].icon;
     return weatherConditions[weatherIcon] || weatherConditions["01d"];
   };
 
-  // Função para verificar se é dia ou noite
   const getTimeOfDay = () => {
-    if (!cityLocalTime) return "day";
+    if (!cityLocalTime || cityLocalTime === "--:--") return "day";
     const hours = parseInt(cityLocalTime.split(":")[0]);
     return hours >= 6 && hours < 18 ? "day" : "night";
   };
 
-  /**
-   * Renderiza tela de busca
-   */
   const renderSearchScreen = () => (
     <View style={styles.searchContainer}>
       <TouchableOpacity style={styles.searchButton} onPress={initializeApp}>
@@ -382,9 +348,6 @@ export default function App() {
     </View>
   );
 
-  /**
-   * Renderiza tela principal do clima
-   */
   const renderWeatherScreen = () => {
     if (loading) {
       return (
@@ -437,7 +400,6 @@ export default function App() {
 
     return (
       <View style={styles.weatherContainer}>
-        {/* Indicador de Horário Local */}
         <View style={styles.timeIndicator}>
           <MaterialCommunityIcons
             name={timeOfDay === "day" ? "weather-sunny" : "weather-night"}
@@ -450,13 +412,11 @@ export default function App() {
           </Text>
         </View>
 
-        {/* Cabeçalho com cidade */}
         <View style={styles.header}>
           <Text style={styles.cityName}>{weatherData.name}</Text>
           <Text style={styles.countryText}>{weatherData.sys.country}</Text>
         </View>
 
-        {/* Temperatura Principal */}
         <View style={styles.tempContainer}>
           <View style={styles.tempWrapper}>
             <Text style={styles.tempText}>
@@ -473,7 +433,6 @@ export default function App() {
           </View>
         </View>
 
-        {/* Detalhes do Clima */}
         <View style={styles.detailsContainer}>
           <View style={styles.detailItem}>
             <Feather name="thermometer" size={20} color="#aaa" />
@@ -508,7 +467,6 @@ export default function App() {
           </View>
         </View>
 
-        {/* Nascer e Pôr do Sol */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Nascer e Pôr do Sol</Text>
           <View style={styles.sunContainer}>
@@ -549,7 +507,6 @@ export default function App() {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Barra de Busca */}
           <View style={styles.searchBarContainer}>
             <Feather
               name="search"
@@ -580,7 +537,6 @@ export default function App() {
             )}
           </View>
 
-          {/* Conteúdo Principal */}
           {isSearching ? renderSearchScreen() : renderWeatherScreen()}
         </ScrollView>
       </SafeAreaView>
@@ -588,69 +544,20 @@ export default function App() {
   );
 }
 
-// Estilos
+// ESTILOS COMPLETOS E CORRETOS
 const styles = StyleSheet.create({
-  background: { flex: 1, backgroundColor: "#1a1a2e" },
-  container: { flex: 1 },
-  scrollContent: { flexGrow: 1 },
-
-  timeIndicator: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    alignSelf: "center",
-    marginBottom: 10,
-  },
-  timeIndicatorText: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "500",
-    marginLeft: 8,
-  },
-
-  loadingContainer: {
+  background: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
+    backgroundColor: "#1a1a2e",
   },
-  loadingText: {
-    color: "#fff",
-    fontSize: 16,
-    marginTop: 15,
-    textAlign: "center",
-  },
-  errorContainer: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 30,
   },
-  errorText: {
-    color: "#FF6B6B",
-    fontSize: 18,
-    textAlign: "center",
-    marginTop: 20,
-    lineHeight: 24,
-  },
-  retryButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    paddingHorizontal: 25,
-    paddingVertical: 12,
-    borderRadius: 25,
-    marginTop: 20,
-  },
-  retryButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+  scrollContent: {
+    flexGrow: 1,
   },
 
-  // === ESTILO DA BARRA DE PESQUISA ===
+  // Barra de pesquisa
   searchBarContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -664,7 +571,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.3)",
   },
-  searchIcon: { marginRight: 10 },
+  searchIcon: {
+    marginRight: 10,
+  },
   searchInput: {
     flex: 1,
     color: "white",
@@ -681,143 +590,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  weatherContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-  },
-  header: {
-    alignItems: "center",
-    marginTop: 10,
-  },
-  cityName: {
-    color: "white",
-    fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 5,
-  },
-  countryText: {
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: 16,
-    marginTop: 5,
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-
-  tempContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    marginTop: 30,
-    paddingHorizontal: 10,
-  },
-  tempWrapper: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  tempText: {
-    color: "white",
-    fontSize: 96,
-    fontWeight: "200",
-    lineHeight: 96,
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 10,
-  },
-  tempUnit: {
-    color: "white",
-    fontSize: 32,
-    fontWeight: "300",
-    marginTop: 10,
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 5,
-  },
-  conditionContainer: {
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-  detailsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    borderRadius: 20,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-  },
-  detailItem: {
-    alignItems: "center",
-    flex: 1,
-  },
-  detailText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 8,
-    textShadowColor: "rgba(0, 0, 0, 0.5)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  detailLabel: {
-    color: "rgba(255, 255, 255, 0.7)",
-    fontSize: 12,
-    marginTop: 4,
-  },
-
-  card: {
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-  },
-  cardTitle: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
-    textShadowColor: "rgba(0, 0, 0, 0.5)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  sunContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  sunItem: {
-    alignItems: "center",
-    flex: 1,
-  },
-  sunDivider: {
-    width: 1,
-    height: 50,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-  },
-  sunTime: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "600",
-    marginTop: 8,
-    textShadowColor: "rgba(0, 0, 0, 0.5)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  sunLabel: {
-    color: "rgba(255, 255, 255, 0.7)",
-    fontSize: 14,
-    marginTop: 4,
-  },
-
+  // Tela de busca
   searchContainer: {
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -867,5 +640,204 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     fontWeight: "500",
+  },
+
+  // Indicador de tempo
+  timeIndicator: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignSelf: "center",
+    marginBottom: 10,
+  },
+  timeIndicatorText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "500",
+    marginLeft: 8,
+  },
+
+  // Loading e erro
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  loadingText: {
+    color: "#fff",
+    fontSize: 16,
+    marginTop: 15,
+    textAlign: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 30,
+  },
+  errorText: {
+    color: "#FF6B6B",
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 20,
+    lineHeight: 24,
+  },
+  retryButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    paddingHorizontal: 25,
+    paddingVertical: 12,
+    borderRadius: 25,
+    marginTop: 20,
+  },
+  retryButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  // Container principal do clima
+  weatherContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  header: {
+    alignItems: "center",
+    marginTop: 10,
+  },
+  cityName: {
+    color: "white",
+    fontSize: 32,
+    fontWeight: "bold",
+    textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 5,
+  },
+  countryText: {
+    color: "rgba(255, 255, 255, 0.8)",
+    fontSize: 16,
+    marginTop: 5,
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+
+  // Temperatura
+  tempContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    marginTop: 30,
+    paddingHorizontal: 10,
+  },
+  tempWrapper: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+  tempText: {
+    color: "white",
+    fontSize: 96,
+    fontWeight: "200",
+    lineHeight: 96,
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
+  },
+  tempUnit: {
+    color: "white",
+    fontSize: 32,
+    fontWeight: "300",
+    marginTop: 10,
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 5,
+  },
+  conditionContainer: {
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  // Detalhes
+  detailsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 30,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
+  },
+  detailItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+  detailText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 8,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  detailLabel: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 12,
+    marginTop: 4,
+  },
+
+  // Card do sol
+  card: {
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 20,
+    padding: 20,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
+  },
+  cardTitle: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  sunContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  sunItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+  sunTime: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "600",
+    marginTop: 8,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  sunLabel: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontSize: 14,
+    marginTop: 4,
+  },
+  sunDivider: {
+    width: 1,
+    height: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
   },
 });
