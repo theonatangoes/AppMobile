@@ -82,7 +82,7 @@ const backgroundImages = {
   "02d":
     "https://img.freepik.com/fotos-gratis/bela-paisagem-celeste-durante-o-dia_23-2149265586.jpg?semt=ais_hybrid&w=740&q=80",
   "01n":
-    "https://img.freepik.com/fotos-gratis/imagem-vertical-de-um-belo-ceu-estrelado_181624-42267.jpg?semt=ais_hybrid&w=740&q=80",
+    "https://i.pinimg.com/736x/5b/e1/95/5be19597089a6418293cbc231f91c570.jpg",
   "02n":
     "https://images.unsplash.com/photo-1595178302776-fa04e6d45879?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGMlQzMlQTl1JTIwZXN0cmVsYWRvfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
   "03d":
