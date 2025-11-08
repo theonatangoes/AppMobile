@@ -56,6 +56,7 @@ interface WeatherData {
 // Cidades para a tela de busca
 const recommendedCities = [
   "Brasília",
+  "Fortaleza",
   "Salvador",
   "São Paulo",
   "Rio de Janeiro",
@@ -66,14 +67,7 @@ const recommendedCities = [
   "Belo Horizonte",
 ];
 
-const popularCities = [
-  "Beijing",
-  "Shanghai",
-  "Tokyo",
-  "New York",
-  "London",
-  "Paris",
-];
+const popularCities = ["Tokyo", "New York", "London", "Paris"];
 
 // Imagens de fundo (mantidas as mesmas)
 const backgroundImages = {
@@ -84,7 +78,7 @@ const backgroundImages = {
   "01n":
     "https://i.pinimg.com/736x/5b/e1/95/5be19597089a6418293cbc231f91c570.jpg",
   "02n":
-    "https://images.unsplash.com/photo-1595178302776-fa04e6d45879?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGMlQzMlQTl1JTIwZXN0cmVsYWRvfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
+    "https://media.istockphoto.com/id/1408392890/pt/foto/rising-supermoon.jpg?s=612x612&w=0&k=20&c=S1JTroRrXD7aJnCMw2azizT4LRUJM5FtqXzg9x7l6Mc=",
   "03d":
     "https://img.freepik.com/fotos-premium/natureza-do-sol-no-ceu-nublado-com-nuvens_73110-10563.jpg",
   "04d":
@@ -201,7 +195,7 @@ export default function App() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg(
-          "📍 Permissão de localização negada. Use a busca para encontrar uma cidade."
+          "Permissão de localização negada. Use a busca para encontrar uma cidade."
         );
         setLoading(false);
         setIsSearching(true);
@@ -269,21 +263,21 @@ export default function App() {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          setErrorMsg("🔑 CHAVE API INVÁLIDA");
+          setErrorMsg("CHAVE API INVÁLIDA");
           break;
         case 404:
-          setErrorMsg(`📍 Cidade "${location}" não encontrada`);
+          setErrorMsg(`Cidade "${location}" não encontrada`);
           break;
         case 429:
-          setErrorMsg("⚡ Limite de requisições excedido");
+          setErrorMsg("Limite de requisições excedido");
           break;
         default:
-          setErrorMsg(`❌ Erro ${error.response.status}`);
+          setErrorMsg(`Erro ${error.response.status}`);
       }
     } else if (error.request) {
-      setErrorMsg("🌐 Sem conexão com a internet");
+      setErrorMsg("Sem conexão com a internet");
     } else {
-      setErrorMsg(`⚠️ Erro ao buscar: ${location}`);
+      setErrorMsg(`Erro ao buscar: ${location}`);
     }
   };
 
