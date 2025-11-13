@@ -16,7 +16,7 @@ import {
 } from "react-native";
 
 // --- CHAVE API ---
-const API_KEY = "a3e121329c34edcf8c5ae339c9876e4b";
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
 // Interface para os dados do clima
 interface WeatherData {
